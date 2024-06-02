@@ -1,0 +1,126 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}Dashboard{% endblock %}
+
+{% block homestyle  %}
+<style>
+    body {
+      background-color: #fbfbfb;
+    }
+    @media (min-width: 991.98px) {
+      main {
+        padding-left: 240px;
+      }
+    }
+
+    /* Sidebar */
+    .sidebar {
+      position: fixed;
+      top: 0;
+      bottom: 0;
+      left: 0;
+      padding: 58px 0 0; /* Height of navbar */
+      box-shadow: 0 2px 5px 0 rgb(0 0 0 / 5%), 0 2px 10px 0 rgb(0 0 0 / 5%);
+      width: 240px;
+      z-index: 600;
+      background-color: #DAC0A3;
+    }
+
+    @media (max-width: 991.98px) {
+      .sidebar {
+        width: 100%;
+      }
+    }
+    .sidebar .active {
+      border-radius: 5px;
+      box-shadow: 0 2px 5px 0 rgb(0 0 0 / 16%), 0 2px 10px 0 rgb(0 0 0 / 12%);
+    }
+
+    .sidebar-sticky {
+      position: relative;
+      top: 0;
+      height: calc(100vh - 48px);
+      padding-top: 0.5rem;
+      overflow-x: hidden;
+      overflow-y: auto; /* Scrollable contents if viewport is shorter than content. */
+    }
+      .sidebar img {
+        width: 100%;
+        height: auto;
+        display: block;
+        margin: 0 auto;
+
+    }
+      .list-group-item {
+      margin-bottom: 15px; /* Adjust the value as needed */
+      padding-bottom: 10px; /* Adjust the value as needed */
+    }
+</style>
+
+{% endblock %}
+
+{% block sidebar %}
+<!--Main Navigation-->
+<header>
+   <!-- Sidebar -->
+  <nav id="sidebarMenu" class="collapse d-lg-block sidebar collapse ">
+    <div class="position-sticky">
+      <img src="{% static 'images/librarybackgroundimg.jpg' %}" alt="Sidebar Image">
+      <div class="list-group list-group-flush mx-3 mt-4">
+        <a
+          href="{% url 'library_app:index'%}"
+          class="list-group-item list-group-item-action py-2 ripple"
+          aria-current="true"
+        >
+         <i class="fab fa-windows me-3"></i><span>Dashboard</span>
+        </a>
+        <a href="{% url 'library_app:librarybooks' %}" class="list-group-item list-group-item-action py-2 ripple {% if request.path == '/library_app:librarybooks/' %} class='active'{% endif %}"
+          ><i class="fas fa-book me-3"></i><span>Borrow Book</span></a
+        >
+          <a href="{% url 'library_app:userbooks' %}" class="list-group-item list-group-item-action py-2 ripple  "
+          ><i class="fas fa-arrow-rotate-left me-3"></i><span>Return Book</span></a
+          >
+        <a href="{% url 'library_app:addbook' %}" class="list-group-item list-group-item-action py-2 ripple "
+          ><i class="fas fa-square-plus me-3"></i><span>Add Book</span></a
+        >
+        <a href="{% url 'library_app:duebookusers' %}" class="list-group-item list-group-item-action py-2 ripple"
+          ><i class="far fa-calendar-minus me-3"></i><span>Books Due Users</span></a
+        >
+          <a href="{% url 'library_app:wishlist' %}" class="list-group-item list-group-item-action py-2 ripple"
+          ><i class="far fa-bookmark me-3"></i><span>Wish List</span></a
+        >
+      </div>
+    </div>
+  </nav>
+  <!-- Sidebar -->
+</header>
+<!--Main Navigation-->
+
+
+{% endblock %}
+{% block content %}
+<div class="container text-center">
+  {% if messages %}
+            <ul class="messages">
+                {% for message in messages %}
+                <li {% if message.tags %} class="{{ message.tags }}" {% endif %}>{{ message }} </li>
+                {% endfor %}
+            </ul>
+{% endif %}
+</div>
+<div class="container d-flex align-items-center justify-content-center" style="min-height: 90vh;">
+    <div class="row align-items-center justify-content-center text-center">
+      <div class="col-12 col-lg-12">
+        <ul  class="list-group list-group-flush">
+            <li class="list-group-item"><a href="{% url 'library_app:librarybooks' %}" style="color:#6F4E37 ; font-weight: bold; "><i class="fas fa-book-open me-3"></i>Borrow Book</a></li>
+            <li class="list-group-item border-bottom"><a href="{% url 'library_app:userbooks' %}" style="color:#6F4E37 ; font-weight: bold;"><i class="fas fa-arrow-right-arrow-left me-3"></i>Return Book</a></li>
+            <li class="list-group-item border-bottom"><a href="{% url 'library_app:addbook' %}" style="color:#6F4E37 ; font-weight: bold;"><i class="fas fa-book-medical me-3"></i>Add Book</a></li>
+            <li class="list-group-item border-bottom"><a href="{% url 'library_app:duebookusers' %}" style="color:#6F4E37 ; font-weight: bold;"><i class="fas fa-user-large-slash me-3"></i>Book Due Users</a></li>
+            <li class="list-group-item border-bottom"><a href="{% url 'library_app:wishlist' %}" style="color:#6F4E37 ; font-weight: bold;"><i class="fas fa-bookmark me-3"></i>Wish List</a></li>
+        </ul>
+      </div>
+    </div>
+</div>
+{% endblock %}
+
+

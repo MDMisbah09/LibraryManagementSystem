@@ -1,0 +1,135 @@
+{% extends "base.html" %}
+
+{% load static %}
+
+{% block title %}Borrow Books{% endblock %}
+
+{% block librarybookstyle %}
+<style>
+        /* Sidebar */
+    .sidebar {
+      position: fixed;
+      top: 0;
+      bottom: 0;
+      left: 0;
+      padding: 58px 0 0; /* Height of navbar */
+      box-shadow: 0 2px 5px 0 rgb(0 0 0 / 5%), 0 2px 10px 0 rgb(0 0 0 / 5%);
+      width: 240px;
+      z-index: 600;
+      background-color: #DAC0A3;
+    }
+
+    @media (max-width: 991.98px) {
+      .sidebar {
+        width: 100%;
+      }
+    }
+    .sidebar .active {
+      border-radius: 5px;
+      box-shadow: 0 2px 5px 0 rgb(0 0 0 / 16%), 0 2px 10px 0 rgb(0 0 0 / 12%);
+    }
+
+    .sidebar-sticky {
+      position: relative;
+      top: 0;
+      height: calc(100vh - 48px);
+      padding-top: 0.5rem;
+      overflow-x: hidden;
+      overflow-y: auto; /* Scrollable contents if viewport is shorter than content. */
+    }
+      .sidebar img {
+        width: 100%;
+        height: auto;
+        display: block;
+        margin: 0 auto;
+
+    }
+
+    .list-group-item {
+      margin-bottom: 15px; /* Adjust the value as needed */
+      padding-bottom: 10px; /* Adjust the value as needed */
+    }
+
+    .custonicon{
+     margin-left:10px;
+     color:#496989;
+    }
+    .custonicon:hover {
+     color: #01204E;
+    }
+
+    .customtext{
+     color:#AA77FF;
+    }
+    .customtext:hover {
+     color: #9400FF;
+    }
+</style>
+{% endblock %}
+
+
+{% block content %}
+
+
+
+<!----------------------- SIDE BAR BLOCK TAG  ------------------------->
+
+{% block sidebar %}
+<!--Main Navigation-->
+<header>
+   <!-- Sidebar -->
+  <nav id="sidebarMenu" class="collapse d-lg-block sidebar collapse ">
+    <div class="position-sticky">
+      <img src="{% static 'images/librarybackgroundimg.jpg' %}" alt="Sidebar Image">
+      <div class="list-group list-group-flush mx-3 mt-4">
+        <a
+          href="{% url 'library_app:index'%}"
+          class="list-group-item list-group-item-action py-2 ripple"
+          aria-current="true"
+        >
+         <i class="fab fa-windows me-3"></i><span>Dashboard</span>
+        </a>
+        <a href="{% url 'library_app:librarybooks' %}" class="list-group-item list-group-item-action py-2 ripple"
+          ><i class="fas fa-book me-3"></i><span>Borrow Book</span></a
+        >
+        <a href="{% url 'library_app:userbooks' %}" class="list-group-item list-group-item-action py-2 ripple"
+          ><i class="fas fa-arrow-rotate-left me-3"></i><span>Return Book</span></a
+        >
+          <a href="{% url 'library_app:addbook' %}" class="list-group-item list-group-item-action py-2 ripple  "
+          ><i class="fas fa-square-plus me-3"></i><span>Add Book</span></a
+          >
+          <a href="{% url 'library_app:duebookusers' %}" class="list-group-item list-group-item-action py-2 ripple {% if request.path == '/library_app:librarybooks/' %} class='active'{% endif %}"
+            ><i class="far fa-calendar-minus me-3"></i><span>Book Due Users</span></a
+          >
+      </div>
+    </div>
+  </nav>
+  <!-- Sidebar -->
+</header>
+<!--Main Navigation-->
+
+<!--Main layout-->
+{% endblock %}
+<!----------------------------- CONTENT BLOCK TAG ------------------------->
+
+
+<div class="row justify-content-md-center text-center">
+    <div class="col-md-auto">
+        <h1>Library Books List</h1>
+        {% if books %}
+        <ol class="list-group list-group-flush list-group-numbered ">
+            {% for book in books %}
+            {% for author in book.authors.all %}
+            <li class="list-group-item" style="text-shadow: 1px 1px 1px black; margin-top:10px; color:#151515;">
+                <a class="me-3" href="{% url 'library_app:borrowbook' book.slug %}" style="color:#6F4E37;" >
+                    Book: <strong class="me-3">{{ book.name }}</strong>Author: <strong>{{ author.author }}</strong>
+                </a>
+            </li>
+            {% endfor %}
+            {% endfor %}
+        </ol>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}
+

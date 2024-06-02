@@ -1,0 +1,98 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}Library{% endblock %}
+
+{% block indexstyle %}
+    <style>
+        html, body {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+        }
+        body {
+            background-color: #f0f0f0; /* Optional: light background color for the body */
+        }
+        .content-background {
+            background-image: url('{% static "images/lib.jpg" %}'); /* Replace with your image path */
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            height: 100%;
+            margin: 0;/* Set all margins to 0 */
+            padding: 0; /* Optional: Add some padding for content inside */
+            width: 100%; /* Ensure full width */
+            display: flex;
+        }
+    </style>
+{% endblock %}
+
+{% block content %}
+    <div class="text-center">
+        <h1 style="text-shadow: 1px 1px 2px black; color:#6DA4AA; margin-top:10px;">
+            <strong>Welcome To Library</strong>
+        </h1>
+    </div>
+       <div class="chart-container container" >
+            <canvas id="libraryChart" width="1000" height="400"></canvas> <!-- Canvas without explicit width/height attributes for responsive design -->
+       </div>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        var ctx = document.getElementById('libraryChart').getContext('2d');
+        var libraryChart = new Chart(ctx, {
+            type: 'bar',  // 'bar' type for column chart
+            data: {
+                labels: {{ book_name|safe }},
+                datasets: [{
+                    label: 'Number of Borrowed Books',
+                    data: {{ borrow_counts|safe }},
+                     backgroundColor: [
+                          'rgba(255, 99, 132, 0.2)',
+                          'rgba(255, 159, 64, 0.2)',
+                          'rgba(255, 205, 86, 0.2)',
+                          'rgba(75, 192, 192, 0.2)',
+                          'rgba(54, 162, 235, 0.2)',
+                          'rgba(153, 102, 255, 0.2)',
+                          'rgba(201, 203, 207, 0.2)'
+                        ],
+                        borderColor: [
+                          'rgb(255, 99, 132)',
+                          'rgb(255, 159, 64)',
+                          'rgb(255, 205, 86)',
+                          'rgb(75, 192, 192)',
+                          'rgb(54, 162, 235)',
+                          'rgb(153, 102, 255)',
+                          'rgb(201, 203, 207)'
+                        ],
+                    borderWidth: 1,
+                     barThickness: 70
+                }]
+            },
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+    </script>
+
+ <div class="content-background">
+    <div class="container text-center">
+        <h1 style="color:#6DA4AA;"><strong>Library Books List</strong></h1>
+        {% if books %}
+        <ol class="list-group list-group-light list-group-numbered">
+            {% for book in books %}
+                {% for author in book.authors.all %}
+                    <li class="list-group-item" style="text-shadow: 1px 1px 2px black; margin-top:10px; color:#EEE4B1; font-size: 1.2rem;">
+                            Book: <strong class="me-3">{{ book.name }}</strong>Author: <strong>{{ author.author }}</strong>
+                    </li>
+                {% endfor %}
+            {% endfor %}
+        </ol>
+        {% endif %}
+    </div>
+ </div>
+{% endblock %}
+

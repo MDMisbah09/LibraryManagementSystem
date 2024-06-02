@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Due Book Users</title>
+</head>
+<body>
+<h1>Users Not return books</h1>
+ {% if due_users %}
+        <ul>
+            {% for entry in due_users %}
+                <li>
+                    User: {{ entry.user }}, Book: {{ entry.book }}, Days Overdue: {{ entry.rdate }}
+                </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>No users with overdue books.</p>
+    {% endif %}
+</body>
+</html>

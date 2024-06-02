@@ -1,0 +1,140 @@
+{% extends "base.html" %}
+
+{% load static %}
+
+{% block title %}My Borrow Book{% endblock %}
+
+{% block borrowbookstyle %}
+<style>
+    body {
+      background-color: #fbfbfb;
+    }
+    @media (min-width: 991.98px) {
+      main {
+        padding-left: 240px;
+      }
+    }
+
+    /* Sidebar */
+    .sidebar {
+      position: fixed;
+      top: 0;
+      bottom: 0;
+      left: 0;
+      padding: 58px 0 0; /* Height of navbar */
+      box-shadow: 0 2px 5px 0 rgb(0 0 0 / 5%), 0 2px 10px 0 rgb(0 0 0 / 5%);
+      width: 240px;
+      z-index: 600;
+      background-color: #DAC0A3;
+    }
+
+    @media (max-width: 991.98px) {
+      .sidebar {
+        width: 100%;
+      }
+    }
+    .sidebar .active {
+      border-radius: 5px;
+      box-shadow: 0 2px 5px 0 rgb(0 0 0 / 16%), 0 2px 10px 0 rgb(0 0 0 / 12%);
+    }
+
+    .sidebar-sticky {
+      position: relative;
+      top: 0;
+      height: calc(100vh - 48px);
+      padding-top: 0.5rem;
+      overflow-x: hidden;
+      overflow-y: auto; /* Scrollable contents if viewport is shorter than content. */
+    }
+      .sidebar img {
+        width: 100%;
+        height: auto;
+        display: block;
+        margin: 0 auto;
+
+    }
+</style>
+{% endblock %}
+
+
+{% block sidebar %}
+<!--Main Navigation-->
+<header>
+   <!-- Sidebar -->
+  <nav id="sidebarMenu" class="collapse d-lg-block sidebar collapse ">
+    <div class="position-sticky">
+      <img src="{% static 'images/librarybackgroundimg.jpg' %}" alt="Sidebar Image">
+      <div class="list-group list-group-flush mx-3 mt-4">
+        <a
+          href="{% url 'library_app:index'%}"
+          class="list-group-item list-group-item-action py-2 ripple"
+          aria-current="true"
+        >
+         <i class="fab fa-windows me-3"></i><span>Dashboard</span>
+        </a>
+        <a href="{% url 'library_app:librarybooks' %}" class="list-group-item list-group-item-action py-2 ripple {% if request.path == '/library_app:librarybooks/' %} class='active'{% endif %}"
+          ><i class="fas fa-book me-3"></i><span>Borrow Book</span></a
+        >
+          <a href="{% url 'library_app:userbooks' %}" class="list-group-item list-group-item-action py-2 ripple  "
+          ><i class="fas fa-arrow-rotate-left me-3"></i><span>Return Book</span></a
+          >
+          {% if messages %}
+            <ul class="messages">
+                {% for message in messages %}
+                <li {% if message.tags %} class="{{ message.tags }}" {% endif %}>{{ message }} </li>
+                {% endfor %}
+            </ul>
+            {% endif %}
+        <a href="{% url 'library_app:addbook' %}" class="list-group-item list-group-item-action py-2 ripple "
+          ><i class="fas fa-square-plus me-3"></i><span>Add Book</span></a
+          >
+      </div>
+    </div>
+  </nav>
+  <!-- Sidebar -->
+</header>
+<!--Main Navigation-->
+
+<!--Main layout-->
+<main style="margin-top: 58px;">
+  <div class="container pt-4"></div>
+</main>
+<!--Main layout-->
+{% endblock %}
+
+{% block content %}
+
+<div class="container text-center">
+   <h1>Borrow Book here!</h1>
+</div>
+
+<div class="container">
+    <div class="row justify-content-center" style="margin-top: 50px;">
+        <div class="col-md-3">
+            <div class="card h-100">
+                <div class="card-body">
+                    <h5 class="card-title">Borrow</h5>
+                    {% if messages %}
+                    <ul class="messages">
+                        {% for message in messages %}
+                        <li {% if message.tags %} class="{{ message.tags }}" {% endif %}>{{ message }}</li>
+                        {% endfor %}
+                    </ul>
+                    {% endif %}
+                    <div>
+                        <form action="" method="post">
+                            {% csrf_token %}
+                            {{ form }}
+                            <input type="submit" class="btn btn-primary">
+                        </form>
+                    </div>
+                </div>
+                <div class="card-footer">
+                    <small class="text-muted">Last updated 3 mins ago</small>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
