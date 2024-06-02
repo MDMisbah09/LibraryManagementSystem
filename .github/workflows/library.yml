@@ -17,5 +17,5 @@ jobs:
         python -m pip install --upgrade pip
     - name: Run migrations and tests
       run: |
-        python manage.py migrate
-        python manage.py test
+        C:\Users\Mohammed Misbah Uddi\djprojects\venv\Scripts\python manage.py migrate
+        C:\Users\Mohammed Misbah Uddi\djprojects\venv\Scripts\python manage.py test
