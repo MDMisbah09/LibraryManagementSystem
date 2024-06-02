@@ -16,7 +16,6 @@ jobs:
       run: |
         python -m pip install --upgrade pip
     - name: Run migrations and tests
-      shell: cmd
       run: |
-        "C:\\Users\\Mohammed Misbah Uddi\\djprojects\\venv\\Scripts\\python" manage.py migrate
-        "C:\\Users\\Mohammed Misbah Uddi\\djprojects\\venv\\Scripts\\python" manage.py test
+        cmd.exe /c "C:\\Users\\Mohammed Misbah Uddi\\djprojects\\venv\\Scripts\\python" manage.py migrate
+        cmd.exe /c "C:\\Users\\Mohammed Misbah Uddi\\djprojects\\venv\\Scripts\\python" manage.py test
