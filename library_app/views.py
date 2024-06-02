@@ -274,6 +274,6 @@ class UserWishedBookView(FormView):
 class WishListView(ListView):
     model = WishListModel
     template_name = "wishlist.html"
-    context_object_name = 'wishlist'
+    context_object_name = 'bookwishlist'
 
 
